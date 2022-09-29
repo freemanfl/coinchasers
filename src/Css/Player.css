@@ -1,0 +1,14 @@
+.player {
+  position: absolute;
+  
+}
+
+
+/* @keyframes playerFloat {
+  from { transform: translateY(0) }
+  to { transform: translateY(2px) }
+} */
+
+.player-sprite {
+  animation: playerFloat 0.8s linear infinite alternate-reverse;
+}
