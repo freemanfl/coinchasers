@@ -1,48 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from "react";
 import "../Css/Map.css";
 import Player from "./Player";
 
-
-
 function Map() {
+  const mapRef = useRef();
 
+  function getPlayerCoords(ref) {
+    const playerOffsetLeft = ref.current.childNodes[0].offsetLeft;
+    const playerOffsetTop = ref.current.childNodes[0].offsetTop;
+    console.log(playerOffsetLeft, playerOffsetTop);
+  }
 
-const [cX, setCx] = useState(5);
-const [cY, setCy] = useState(50);
-
-
-
-const [playerState, setPlayerState] = useState({
-    width: 16,
-    height: 16,
-    x1: 15,
-    y1: 60,
-    x2: 3,
-    y2: 30,
-    speed: 100,
-    right: 0,
-    time: 3,
-})
-
-
-  function handleClick(event) { 
-    //calculate x and y coords.
-    let currentTargetRect = event.currentTarget.getBoundingClientRect();
-          setPlayerState(5);
-          
-    };
-
-
-
-
-
-
+  function handleClick(e) {
+    let currentTargetRect = e.currentTarget.getBoundingClientRect();
+    const event_offsetX = (e.pageX - currentTargetRect.left).toFixed(2),
+      event_offsetY = (e.pageY - currentTargetRect.top).toFixed(2);
+    console.log(event_offsetX, event_offsetY);
+    getPlayerCoords(mapRef);
+  }
 
   return (
-    <div id="Map" onContextMenu={(e)=> {e.preventDefault(); handleClick(e)}}>
-
-        <Player state={playerState}/>
-
+    <div
+      id="Map"
+      ref={mapRef}
+      onContextMenu={(e) => {
+        e.preventDefault();
+        handleClick(e);
+      }}
+    >
+      <Player />
     </div>
   );
 }
