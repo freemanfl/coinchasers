@@ -7,17 +7,20 @@ function Map() {
   const mapRef = useRef();
   const [x2, setX2] = useState(200);
   const [y2, setY2] = useState(100);
-  const cross = document.getElementById("cross-img");
+  const cross = document.getElementById("cross");
+  
 
   function getPlayerCoords(ref) {
     const playerOffsetLeft = ref.current.childNodes[0].offsetLeft;
     const playerOffsetTop = ref.current.childNodes[0].offsetTop;
-    console.log(playerOffsetLeft, playerOffsetTop);
   }
 
   function animateCross() {
-    console.log('rokoko');
-    setTimeout(console.log('asss'), 20000);
+      cross.style.display = 'block';
+      setTimeout(() => {
+        cross.style.display = 'none';
+      }, "100")
+
   }
 
   function handleClick(e) {
@@ -26,10 +29,9 @@ function Map() {
       event_offsetY = (e.pageY - currentTargetRect.top).toFixed(2);
     setX2(event_offsetX);
     setY2(event_offsetY);
-    console.log(event_offsetX, event_offsetY);
-    console.log(cross);
-    animateCross();
   }
+
+
 
   return (
     <div
@@ -38,6 +40,7 @@ function Map() {
       onContextMenu={(e) => {
         e.preventDefault();
         handleClick(e);
+        animateCross();
       }}
     >
       <Player clickX={x2} clickY={y2} />
@@ -46,10 +49,10 @@ function Map() {
         id="cross"
         style={{
           left: x2 - 3 + "px",
-          top: y2 - 11 + "px",
+          top: y2 - 4 + "px",
         }}
       >
-        <img id="cross-img" src={crossSvg} alt="as" />
+
       </div>
     </div>
   );

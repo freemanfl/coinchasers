@@ -14,16 +14,11 @@
 }
 
 #cross {
+  width: 10px;
+  height: 10px;
   position: absolute;
   z-index: 5;
-  
- padding: 0 auto;
- margin: 0 auto;
-}
+  display: none ;
+  background-image: url('../images/cross.svg');
 
-#cross-img {
-width: 10px;
- height: 10px;
-  
 }
-

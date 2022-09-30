@@ -5,7 +5,7 @@ import playerImage from "../images/characters.png";
 import playerShadow from "../images/shadow.png";
 
 function Player(props) {
-  function displayArrow() {}
+  
   const playerRef = useRef();
   const playerState = {
     height: 16,
@@ -17,6 +17,15 @@ function Player(props) {
     speed: 1,
     right: 0,
   };
+
+  function displayRange(e) {
+    const range = document.getElementById("range");
+    range.addEventListener('mousedown', ()=> {
+      console.log('rokoko');
+    })
+  }
+
+
 
   return (
     //player div
@@ -40,6 +49,11 @@ function Player(props) {
 
       {/* player shadow               */}
       <div className="player-shadow"></div>
+
+      {/* player range               */}
+      <div id="range" className="player-range"></div>
+
+      
     </div>
   );
 }
