@@ -1,14 +1,29 @@
 .player {
   position: absolute;
-  
+  z-index: 10;
+  display: none;
 }
 
-
-/* @keyframes playerFloat {
-  from { transform: translateY(0) }
-  to { transform: translateY(2px) }
-} */
+@keyframes playerFloat {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(2px);
+  }
+}
 
 .player-sprite {
+  width: 16px;
+  height: 16px;
+  transition: none;
+  background-image: url("../images/characters.png");
   animation: playerFloat 0.8s linear infinite alternate-reverse;
+}
+
+.player-shadow {
+  width: 16px;
+  height: 9px;
+  background-image: url("../images/shadow.png");
+  background-position: 0px -23px;
 }
