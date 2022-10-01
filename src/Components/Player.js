@@ -1,31 +1,94 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 
 import "../Css/Player.css";
-import playerImage from "../images/characters.png";
-import playerShadow from "../images/shadow.png";
+
 
 function Player(props) {
   
-  const playerRef = useRef();
   const playerState = {
     height: 16,
     width: 16,
-    x1: 5,
-    y1: 15,
+    x1: props.currentX,
+    y1: props.currentY,
     x2: props.clickX,
     y2: props.clickY,
     speed: 1,
     right: 0,
+    range: 100,
   };
 
-  function displayRange(e) {
-    const range = document.getElementById("range");
-    range.addEventListener('mousedown', ()=> {
-      console.log('rokoko');
-    })
+  function handleMouseDown() {
+    range.classList.add('player-range');
+    trajectory.classList.add('display');
   }
 
+  function handleMouseUp() {
+    range.classList.remove('player-range');
+    trajectory.classList.remove('display');
+  }
 
+  function handleMouseMove(e) {
+    console.log(e.offsetX, e.offsetY);
+  }
+
+  function calculateAngle(e) {
+      const currentX = map.childNodes[0].offsetLeft;
+      const currentY = map.childNodes[0].offsetTop;
+      const mouseX = e.offsetX;
+      const mouseY = e.offsetY;
+      console.log(mouseX, mouseY);
+      // const delta_x = e.mouseOffsetX - posX;
+      // const delta_y = posY - e.mouseOffsetY;
+      // const theta_radians = Math.atan2(delta_y, delta_x)
+      // console.log(theta_radians);
+  }
+ 
+  const playerRef = useRef();
+  const range = document.getElementById('range');
+  const trajectory = document.getElementById('trajectory');
+  const map = document.getElementById('Map');
+
+  function detectLeftButton(event) {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) {
+        return false;
+    } else if ('buttons' in event) {
+        return event.buttons === 1;
+    } else if ('which' in event) {
+        return event.which === 1;
+    } else {
+        return (event.button === 1 || event.type === 'click');
+    }
+}
+  //draw range for left click
+  try {
+    map.addEventListener('mousedown', (event) => {
+
+    if (detectLeftButton(event) === true) {
+      handleMouseDown();
+      map.addEventListener('mousemove', (e)=> {
+        handleMouseMove(e);
+      } );
+
+      map.addEventListener('mouseup', () => {
+        handleMouseUp();
+        map.onmousemove = null;
+    
+      });
+    }
+   })
+  }
+  catch(err) {
+    
+  }
+ 
+  
+
+
+
+
+
+
+  
 
   return (
     //player div
@@ -51,9 +114,16 @@ function Player(props) {
       <div className="player-shadow"></div>
 
       {/* player range               */}
-      <div id="range" className="player-range"></div>
+      <div id="range"></div>
 
-      
+      {/* player skillshot trajectory               */}
+      <div id="trajectory" className="player-trajectory"
+        style={{
+          width: playerState.range + "px",
+          left: playerState.width/2 + "px",
+          top: -playerState.height - 5 + "px"}}>
+
+      </div>
     </div>
   );
 }

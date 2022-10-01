@@ -28,13 +28,27 @@
   background-position: 0px -23px;
 }
 
-.player-range {
+
+#range {
   position: absolute;
   width: 100px;
   height: 100px;
-  border: 2px solid black;
   border-radius: 50%;
   left: -44px;
   top: -44px;
+}
 
+.player-range {
+  border: 2px solid blue;
+}
+
+.player-trajectory {
+  position: relative;
+  height: 10px;
+  background-color: red;
+  z-index: 5;
+  display: none;
+}
+.display {
+  display: block;
 }

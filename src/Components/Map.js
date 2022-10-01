@@ -1,25 +1,35 @@
 import { useState, useRef } from "react";
 import "../Css/Map.css";
-import crossSvg from "../images/cross.svg";
 import Player from "./Player";
 
 function Map() {
   const mapRef = useRef();
   const [x2, setX2] = useState(200);
   const [y2, setY2] = useState(100);
-  const cross = document.getElementById("cross");
-  
 
-  function getPlayerCoords(ref) {
-    const playerOffsetLeft = ref.current.childNodes[0].offsetLeft;
-    const playerOffsetTop = ref.current.childNodes[0].offsetTop;
+  const cross = document.getElementById("cross");
+
+  
+ function getPlayerCoords(ref) {
+      const playerOffsetLeft = ref.current.childNodes[0].offsetLeft;
+      const playerOffsetTop = ref.current.childNodes[0].offsetTop;
+      const playerCoords = [playerOffsetLeft, playerOffsetTop];
+      console.log(playerCoords[1]);
+      return(playerCoords)
   }
+ 
 
   function animateCross() {
+    try {
       cross.style.display = 'block';
       setTimeout(() => {
         cross.style.display = 'none';
-      }, "100")
+      }, "50")
+    }
+    catch(err) {
+    
+    }
+
 
   }
 
@@ -29,6 +39,7 @@ function Map() {
       event_offsetY = (e.pageY - currentTargetRect.top).toFixed(2);
     setX2(event_offsetX);
     setY2(event_offsetY);
+
   }
 
 
