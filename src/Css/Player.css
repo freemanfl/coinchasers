@@ -43,10 +43,11 @@
 }
 
 .player-trajectory {
-  position: relative;
+  position: absolute;
   height: 10px;
   background-color: red;
   z-index: 5;
+  transform-origin: center left;
   display: none;
 }
 .display {

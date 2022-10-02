@@ -4,7 +4,7 @@ import "../Css/Player.css";
 
 
 function Player(props) {
-  
+
   const playerState = {
     height: 16,
     width: 16,
@@ -12,9 +12,11 @@ function Player(props) {
     y1: props.currentY,
     x2: props.clickX,
     y2: props.clickY,
-    speed: 1,
+    speed: 100,
     right: 0,
     range: 100,
+    angle: 5,
+    
   };
 
   function handleMouseDown() {
@@ -28,21 +30,34 @@ function Player(props) {
   }
 
   function handleMouseMove(e) {
-    console.log(e.offsetX, e.offsetY);
+    const posX = map.childNodes[0].offsetLeft;
+    const posY = map.childNodes[0].offsetTop;
+    console.log(posX, posY);
+    const mouseX = e.offsetX;
+    const mouseY = e.offsetY;
+    const dx = mouseX - posX;
+    const dy = posY - mouseY;
+    const theta_radians = Math.atan2(dy, dx);
+    
+    playerState.angle = theta_radians * 57.3;
+    console.log();
   }
 
-  function calculateAngle(e) {
+  function calculateTime(e) {
       const currentX = map.childNodes[0].offsetLeft;
       const currentY = map.childNodes[0].offsetTop;
       const mouseX = e.offsetX;
       const mouseY = e.offsetY;
-      console.log(mouseX, mouseY);
+      const dx = Math.abs(mouseX - currentX);
+      const dy = Math.abs(mouseY - currentY);
+      playerState.time =  Math.sqrt(dx*dx + dy*dy);
+  
       // const delta_x = e.mouseOffsetX - posX;
       // const delta_y = posY - e.mouseOffsetY;
       // const theta_radians = Math.atan2(delta_y, delta_x)
       // console.log(theta_radians);
   }
- 
+  
   const playerRef = useRef();
   const range = document.getElementById('range');
   const trajectory = document.getElementById('trajectory');
@@ -65,13 +80,11 @@ function Player(props) {
 
     if (detectLeftButton(event) === true) {
       handleMouseDown();
-      map.addEventListener('mousemove', (e)=> {
-        handleMouseMove(e);
-      } );
-
+      map.addEventListener('mousemove', handleMouseMove);
+      
       map.addEventListener('mouseup', () => {
         handleMouseUp();
-        map.onmousemove = null;
+        map.removeEventListener('mousemove', handleMouseMove);
     
       });
     }
@@ -83,12 +96,6 @@ function Player(props) {
  
   
 
-
-
-
-
-
-  
 
   return (
     //player div
@@ -120,8 +127,10 @@ function Player(props) {
       <div id="trajectory" className="player-trajectory"
         style={{
           width: playerState.range + "px",
-          left: playerState.width/2 + "px",
-          top: -playerState.height - 5 + "px"}}>
+          left: playerState.width + "px",
+          top: -playerState.height + "px",
+          transform: `rotate(${playerState.angle}deg)`,
+          }}>
 
       </div>
     </div>

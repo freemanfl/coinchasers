@@ -39,7 +39,7 @@ function Map() {
       event_offsetY = (e.pageY - currentTargetRect.top).toFixed(2);
     setX2(event_offsetX);
     setY2(event_offsetY);
-
+    
   }
 
 
